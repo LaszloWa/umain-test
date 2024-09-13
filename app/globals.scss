@@ -1,0 +1,47 @@
+@font-face {
+	font-family: "SFPro";
+	src: url("./fonts/SF-Pro.ttf") format("truetype");
+}
+
+html,
+body {
+	max-width: 100vw;
+	overflow-x: hidden;
+}
+
+html {
+	padding: 40px;
+	font-family: "SFPro";
+}
+
+body {
+	font-size: 12px;
+	line-height: 125%;
+	letter-spacing: -0.03125rem;
+	font-weight: normal;
+}
+
+header {
+	margin: 56px 0 48px;
+}
+
+h1 {
+	font-family: "SFPro";
+	font-size: 40px;
+	line-height: 125%;
+	letter-spacing: -0.03125rem;
+	font-weight: normal;
+}
+
+h2 {
+	font-family: "SFPro";
+	font-size: 24px;
+	line-height: 125%;
+	letter-spacing: -0.03125rem;
+	font-weight: normal;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
