@@ -7,6 +7,7 @@ import "./globals.scss";
 export const metadata: Metadata = {
 	title: "Munchies",
 	description: "Find your favorite restaurant!",
+	icons: { icon: "/favicon.ico?v=1" },
 };
 
 export default function RootLayout({
