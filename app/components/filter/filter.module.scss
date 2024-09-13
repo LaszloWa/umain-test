@@ -1,0 +1,29 @@
+@import "../../styles/colors.scss";
+
+.filter {
+	height: 31px;
+	border-radius: 8px;
+	border: $stroke 0.6px solid;
+	padding: 0 12px;
+	background: none;
+	color: inherit;
+	outline: inherit;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+.title {
+	color: #747373;
+}
+
+.selectedFilter {
+	background-color: $green;
+	color: $off-white;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	padding: 0;
+}

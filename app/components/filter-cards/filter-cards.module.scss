@@ -1,0 +1,17 @@
+.filterCards {
+	list-style: none;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.filterCard {
+	width: 160px;
+	height: 80px;
+	border-radius: 8px;
+	border-width: 0.6px;
+	box-shadow: 0px 0px 2px 0px #9e975a;
+	display: flex;
+	justify-content: space-between;
+	padding: 16px 12px;
+}

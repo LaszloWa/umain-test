@@ -1,0 +1,45 @@
+@import "../../styles/box-shadow.scss";
+@import "../../styles/colors.scss";
+
+.restaurantCard {
+	width: 327px;
+	height: 202px;
+	border-width: 0.6px;
+	border-radius: 8px;
+	box-shadow: $big-box-shadow;
+	padding: 16px;
+	position: relative;
+	overflow: hidden;
+	display: grid;
+	grid-template-rows: 1fr auto;
+}
+
+.top {
+	display: flex;
+	gap: 10px;
+	margin-bottom: auto;
+}
+
+.image {
+	position: absolute;
+	top: -25px;
+	right: -15px;
+}
+
+.bottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.arrowIcon {
+	background-color: $green;
+	display: inline;
+	border-radius: 88px;
+	padding: 8px;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
