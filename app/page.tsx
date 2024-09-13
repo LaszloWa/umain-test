@@ -103,8 +103,8 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 				if (restaurant.filterIds.includes(filter)) isIncluded = true;
 			});
 		} else if (priceFilters?.length) {
-			if (!priceFilters.includes(restaurant.priceRangeId)) {
-				isIncluded = false;
+			if (priceFilters.includes(restaurant.priceRangeId)) {
+				isIncluded = true;
 			}
 		} else {
 			isIncluded = true;
