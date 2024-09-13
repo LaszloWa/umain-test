@@ -7,7 +7,7 @@ import styles from "./filter.module.scss";
 import { Filter as Props } from "./filter.types";
 import { useSearchParams } from "next/navigation";
 
-const Filter: React.FC<Props> = ({ filterOptions, title }) => {
+const Filter: React.FC<Props> = ({ category, filterOptions, title }) => {
 	const immutableQuery = useSearchParams();
 
 	return (
@@ -17,8 +17,8 @@ const Filter: React.FC<Props> = ({ filterOptions, title }) => {
 				{filterOptions.map(({ id, isSelected, name }) => {
 					const mutableQuery = new URLSearchParams(immutableQuery);
 					isSelected
-						? mutableQuery.delete("filters", id)
-						: mutableQuery.append("filters", id);
+						? mutableQuery.delete(category, id)
+						: mutableQuery.append(category, id);
 					return (
 						<a
 							href={`?${mutableQuery.toString()}`}

@@ -2,16 +2,17 @@ import React, { useState } from "react";
 
 import { Root as Props } from "./page.types";
 import RestaurantCard from "./components/restaurant-card/restaurant-card";
-import getRestaurants, { restaurant } from "./services/restaurants";
+import getRestaurants from "./services/restaurants";
 import { RestaurantCard as RestaurantCardType } from "./components/restaurant-card/restaurant-card.types";
 import getOpenState from "./services/open";
-import { isDefined } from "list-fns";
+import { isDefined, unique } from "list-fns";
 import FilterCards from "./components/filter-cards/filter-cards";
 import getFilters from "./services/filters";
 import Filters from "./components/filters/filters";
 import { Filters as FiltersType } from "./components/filters/filters.types";
 
 import styles from "./page.module.scss";
+import { FilterNames } from "./components/helpers/filter-helpers";
 
 const Root: React.FC<Props> = async ({ searchParams }) => {
 	const query = searchParams;
@@ -47,35 +48,70 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 		}),
 	);
 
+	const priceRanges = restaurants
+		.map((restaurant) => restaurant.priceRangeId)
+		.filter(unique);
+
 	const filters: FiltersType["filterCategories"] = [
 		{
 			title: "FOOD CATEGORY",
+			category: FilterNames["Food"],
 			filterOptions: filterResponse.filters.map((filter) => ({
 				...filter,
-				isSelected: query["filters"]?.includes(filter.id) ? true : false,
+				isSelected: query[FilterNames["Food"]]?.includes(filter.id)
+					? true
+					: false,
+			})),
+		},
+		{
+			title: "PRICE RANGE",
+			category: FilterNames["Price"],
+			filterOptions: priceRanges.map((priceRange, index) => ({
+				name: String(index),
+				id: priceRange,
+				isSelected: query[FilterNames["Price"]]?.includes(priceRange)
+					? true
+					: false,
 			})),
 		},
 	];
 
 	// NOTE: this isn't ideal, but the key 'filters' will either contain a single string, if only one filter is present, or a string array if multiple filters are set. TS doesn't know this, but we do
-	const specificQuery =
-		typeof query["filters"] === "string"
-			? [query["filters"]]
-			: (query["filters"] as string[] | undefined);
+	const foodFilters =
+		typeof query["food"] === "string"
+			? [query["food"]]
+			: (query["food"] as string[] | undefined);
 
-	const filteredRestaurants = specificQuery
-		? restaurants.filter((restaurant) => {
-				let isIncluded = false;
+	const priceFilters =
+		typeof query["price"] === "string"
+			? [query["price"]]
+			: (query["price"] as string[] | undefined);
 
-				console.log("the price ranges", restaurant.priceRangeId);
+	const filteredRestaurants = restaurants.filter((restaurant) => {
+		let isIncluded = false;
 
-				specificQuery.forEach((filter) => {
+		if (foodFilters?.length && priceFilters?.length) {
+			if (!priceFilters.includes(restaurant.priceRangeId)) {
+				isIncluded = false;
+			} else {
+				foodFilters.forEach((filter) => {
 					if (restaurant.filterIds.includes(filter)) isIncluded = true;
 				});
+			}
+		} else if (foodFilters?.length) {
+			foodFilters.forEach((filter) => {
+				if (restaurant.filterIds.includes(filter)) isIncluded = true;
+			});
+		} else if (priceFilters?.length) {
+			if (!priceFilters.includes(restaurant.priceRangeId)) {
+				isIncluded = false;
+			}
+		} else {
+			isIncluded = true;
+		}
 
-				return isIncluded;
-		  })
-		: restaurants;
+		return isIncluded;
+	});
 
 	return (
 		<div className={styles.root}>
