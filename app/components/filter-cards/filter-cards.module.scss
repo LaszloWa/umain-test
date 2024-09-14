@@ -1,18 +1,35 @@
+@import "../../styles/box-shadow.scss";
+@import "../../styles/colors.scss";
+
 .filterCards {
-	list-style: none;
-	padding: 0;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
+	list-style: none;
+	padding: 0;
 }
 
 .filterCard {
-	width: 160px;
-	height: 80px;
+	background: none;
 	border-radius: 8px;
 	border-width: 0.6px;
-	box-shadow: 0px 0px 2px 0px #9e975a;
+	border: $stroke 0.6px solid;
+	box-shadow: $small-box-shadow;
+	cursor: pointer;
 	display: flex;
+	height: 80px;
 	justify-content: space-between;
 	padding: 16px 12px;
+	position: relative;
+	width: 160px;
+}
+
+.isSelected {
+	border: $green 1px solid;
+}
+
+.image {
+	right: 0;
+	position: absolute;
+	top: 0;
 }

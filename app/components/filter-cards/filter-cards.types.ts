@@ -1,3 +1,11 @@
+import { FilterNames } from "../helpers/filter-helpers";
+
 export type FilterCards = {
-	filters: { id: string; name: string; image_url: string }[];
+	filters: {
+		category: FilterNames;
+		imageUrl: string;
+		isSelected?: boolean;
+		name: string;
+		value: string;
+	}[];
 };
