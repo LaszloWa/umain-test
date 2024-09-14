@@ -1,16 +1,16 @@
 @import "../../styles/colors.scss";
 
 .filter {
-	height: 31px;
+	align-items: center;
+	background: none;
 	border-radius: 8px;
 	border: $stroke 0.6px solid;
-	padding: 0 12px;
-	background: none;
 	color: inherit;
-	outline: inherit;
 	cursor: pointer;
 	display: flex;
-	align-items: center;
+	height: 31px;
+	outline: inherit;
+	padding: 0 12px;
 }
 .title {
 	color: #747373;

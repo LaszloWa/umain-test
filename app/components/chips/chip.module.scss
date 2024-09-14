@@ -2,27 +2,27 @@
 @import "../../styles/colors.scss";
 
 .chip {
+	align-items: baseline;
 	border-radius: 88px;
-	width: fit-content;
-	text-align: center;
-	padding: 8px 12px;
 	border-width: 0.6px;
 	box-shadow: $small-box-shadow;
 	display: flex;
-	align-items: baseline;
 	gap: 4px;
+	padding: 8px 12px;
+	text-align: center;
+	width: fit-content;
 }
 
 .openState {
-	height: 8px;
-	width: 8px;
 	background-color: $green;
 	border-radius: 100px;
+	height: 8px;
+	width: 8px;
 }
 
 .closedState {
-	height: 8px;
-	width: 8px;
 	background-color: gray;
 	border-radius: 100px;
+	height: 8px;
+	width: 8px;
 }

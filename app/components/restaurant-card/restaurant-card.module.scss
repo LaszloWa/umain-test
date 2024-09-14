@@ -2,16 +2,16 @@
 @import "../../styles/colors.scss";
 
 .restaurantCard {
-	width: 327px;
-	height: 202px;
-	border-width: 0.6px;
 	border-radius: 8px;
+	border-width: 0.6px;
 	box-shadow: $big-box-shadow;
-	padding: 16px;
-	position: relative;
-	overflow: hidden;
 	display: grid;
 	grid-template-rows: 1fr auto;
+	height: 202px;
+	overflow: hidden;
+	padding: 16px;
+	position: relative;
+	width: 327px;
 }
 
 .top {
@@ -22,24 +22,24 @@
 
 .image {
 	position: absolute;
-	top: -25px;
 	right: -15px;
+	top: -25px;
 }
 
 .bottom {
+	align-items: baseline;
 	display: flex;
 	justify-content: space-between;
-	align-items: baseline;
 }
 
 .arrowIcon {
+	align-items: center;
 	background-color: $green;
-	display: inline;
 	border-radius: 88px;
+	display: flex;
+	display: inline;
+	height: 32px;
+	justify-content: center;
 	padding: 8px;
 	width: 32px;
-	height: 32px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }

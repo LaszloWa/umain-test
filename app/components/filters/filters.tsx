@@ -2,10 +2,11 @@
 
 import React from "react";
 
-import styles from "./filters.module.scss";
+import Filter from "../filter/filter";
 
 import { Filters as Props } from "./filters.types";
-import Filter from "../filter/filter";
+
+import styles from "./filters.module.scss";
 
 const Filters: React.FC<Props> = ({ filterCategories }) => {
 	return (

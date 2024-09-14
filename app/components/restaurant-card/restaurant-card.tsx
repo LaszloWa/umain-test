@@ -1,14 +1,15 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
-import { RestaurantCard as Props } from "./restaurant-card.types";
+import Chip from "../chips/chip";
+
 import Arrow from "@/app/assets/arrow.svg";
 
+import { RestaurantCard as Props } from "./restaurant-card.types";
+
 import styles from "./restaurant-card.module.scss";
-import PlaceholderImage from "../../assets/images/taco.png";
-import Image from "next/image";
-import Chip from "../chips/chip";
 
 const RestaurantCard: React.FC<Props> = ({
 	deliveryTime,

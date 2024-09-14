@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { isDefined, unique } from "list-fns";
+
+import { Filters as FiltersType } from "./components/filters/filters.types";
+import { RestaurantCard as RestaurantCardType } from "./components/restaurant-card/restaurant-card.types";
+import RestaurantCard from "./components/restaurant-card/restaurant-card";
+import { FilterCards as FilterCardsType } from "./components/filter-cards/filter-cards.types";
+import { FilterNames } from "./components/helpers/filter-helpers";
+import FilterCards from "./components/filter-cards/filter-cards";
+import Filters from "./components/filters/filters";
 
 import { Root as Props } from "./page.types";
-import RestaurantCard from "./components/restaurant-card/restaurant-card";
-import getRestaurants from "./services/restaurants";
-import { RestaurantCard as RestaurantCardType } from "./components/restaurant-card/restaurant-card.types";
-import getOpenState from "./services/open";
-import { isDefined, unique } from "list-fns";
-import FilterCards from "./components/filter-cards/filter-cards";
+
 import getFilters from "./services/filters";
-import Filters from "./components/filters/filters";
-import { Filters as FiltersType } from "./components/filters/filters.types";
+import getOpenState from "./services/open";
+import getRestaurants from "./services/restaurants";
 
 import styles from "./page.module.scss";
-import { FilterNames } from "./components/helpers/filter-helpers";
 
 const Root: React.FC<Props> = async ({ searchParams }) => {
 	const query = searchParams;
@@ -48,6 +51,16 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 		}),
 	);
 
+	const filterCards: FilterCardsType["filters"] = filterResponse.filters.map(
+		(filter) => ({
+			name: filter.name,
+			value: filter.id,
+			imageUrl: filter.image_url,
+			category: FilterNames["Food"],
+			isSelected: query[FilterNames["Food"]]?.includes(filter.id) ?? false,
+		}),
+	);
+
 	const priceRanges = restaurants
 		.map((restaurant) => restaurant.priceRangeId)
 		.filter(unique);
@@ -59,9 +72,7 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 			filterOptions: filterResponse.filters.map((filter) => ({
 				name: filter.name,
 				value: filter.id,
-				isSelected: query[FilterNames["Food"]]?.includes(filter.id)
-					? true
-					: false,
+				isSelected: query[FilterNames["Food"]]?.includes(filter.id) ?? false,
 			})),
 		},
 		{
@@ -142,7 +153,7 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 				<Filters filterCategories={filters} />
 			</div>
 			<div className={styles.right}>
-				<FilterCards filters={filterResponse.filters} />
+				<FilterCards filters={filterCards} />
 				<h1>Restaurants</h1>
 				<ul className={styles.restaurantCards}>
 					{filteredRestaurants.map((restaurant) => (

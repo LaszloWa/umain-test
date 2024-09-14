@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 	title: "Munchies",
 	description: "Find your favorite restaurant!",
 	icons: { icon: "/favicon.ico?v=1" },
+	robots: { index: false, follow: false },
 };
 
 export default function RootLayout({

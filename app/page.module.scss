@@ -9,8 +9,8 @@
 
 .restaurantCards {
 	display: flex;
+	flex-wrap: wrap;
+	gap: 17px;
 	list-style: none;
 	padding: 0;
-	gap: 17px;
-	flex-wrap: wrap;
 }
