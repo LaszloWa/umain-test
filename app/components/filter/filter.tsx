@@ -1,11 +1,10 @@
 "use client";
 
 import React from "react";
+import { useSearchParams } from "next/navigation";
 
 import styles from "./filter.module.scss";
-
 import { Filter as Props } from "./filter.types";
-import { useSearchParams } from "next/navigation";
 
 const Filter: React.FC<Props> = ({ category, filterOptions, title }) => {
 	const immutableQuery = useSearchParams();
@@ -19,16 +18,19 @@ const Filter: React.FC<Props> = ({ category, filterOptions, title }) => {
 					isSelected
 						? mutableQuery.delete(category, value)
 						: mutableQuery.append(category, value);
+
 					return (
-						<a
-							href={`?${mutableQuery.toString()}`}
+						<button
+							onClick={() =>
+								(window.location.href = `?${mutableQuery.toString()}`)
+							}
 							className={`${styles.filter} ${
 								isSelected ? styles.selectedFilter : undefined
 							}`}
 							key={value}
 						>
 							{name}
-						</a>
+						</button>
 					);
 				})}
 			</ul>
