@@ -57,18 +57,47 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 			title: "FOOD CATEGORY",
 			category: FilterNames["Food"],
 			filterOptions: filterResponse.filters.map((filter) => ({
-				...filter,
+				name: filter.name,
+				value: filter.id,
 				isSelected: query[FilterNames["Food"]]?.includes(filter.id)
 					? true
 					: false,
 			})),
 		},
 		{
+			title: "DELIVERY TIME",
+			category: FilterNames["Time"],
+			filterOptions: [
+				{
+					name: "0-10 min",
+					value: "0,10",
+					isSelected: query[FilterNames["Time"]]?.includes("0,10") ?? false,
+				},
+				{
+					name: "10-30 min",
+					value: "10,30",
+					isSelected: query[FilterNames["Time"]]?.includes("10,30") ?? false,
+				},
+				{
+					name: "30-60 min",
+					value: "30,60",
+					isSelected: query[FilterNames["Time"]]?.includes("30,60") ?? false,
+				},
+				{
+					name: "1 hour+",
+					value: "60,1200",
+					isSelected: query[FilterNames["Time"]]?.includes("60,1200")
+						? true
+						: false,
+				},
+			],
+		},
+		{
 			title: "PRICE RANGE",
 			category: FilterNames["Price"],
 			filterOptions: priceRanges.map((priceRange, index) => ({
 				name: String(index),
-				id: priceRange,
+				value: priceRange,
 				isSelected: query[FilterNames["Price"]]?.includes(priceRange)
 					? true
 					: false,
@@ -76,41 +105,35 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 		},
 	];
 
-	// NOTE: this isn't ideal, but the key 'filters' will either contain a single string, if only one filter is present, or a string array if multiple filters are set. TS doesn't know this, but we do
-	const foodFilters =
-		typeof query["food"] === "string"
-			? [query["food"]]
-			: (query["food"] as string[] | undefined);
+	const normalizeQuery = (
+		queryValue: string | string[] | undefined,
+	): string[] =>
+		typeof queryValue === "string" ? [queryValue] : queryValue || [];
 
-	const priceFilters =
-		typeof query["price"] === "string"
-			? [query["price"]]
-			: (query["price"] as string[] | undefined);
+	const foodFilters = normalizeQuery(query["food"]);
+	const priceFilters = normalizeQuery(query["price"]);
+	const timeFilters = normalizeQuery(query["time"]);
 
 	const filteredRestaurants = restaurants.filter((restaurant) => {
-		let isIncluded = false;
+		const matchesFood = foodFilters.length
+			? foodFilters.some((filter) => restaurant.filterIds.includes(filter))
+			: true;
 
-		if (foodFilters?.length && priceFilters?.length) {
-			if (!priceFilters.includes(restaurant.priceRangeId)) {
-				isIncluded = false;
-			} else {
-				foodFilters.forEach((filter) => {
-					if (restaurant.filterIds.includes(filter)) isIncluded = true;
-				});
-			}
-		} else if (foodFilters?.length) {
-			foodFilters.forEach((filter) => {
-				if (restaurant.filterIds.includes(filter)) isIncluded = true;
-			});
-		} else if (priceFilters?.length) {
-			if (priceFilters.includes(restaurant.priceRangeId)) {
-				isIncluded = true;
-			}
-		} else {
-			isIncluded = true;
-		}
+		const matchesPrice = priceFilters.length
+			? priceFilters.includes(restaurant.priceRangeId)
+			: true;
 
-		return isIncluded;
+		const matchesTime = timeFilters.length
+			? timeFilters.some((timeRange) => {
+					const [minTime, maxTime] = timeRange.split(",").map(Number);
+					return (
+						Number(restaurant.deliveryTime) >= minTime &&
+						Number(restaurant.deliveryTime) <= maxTime
+					);
+			  })
+			: true;
+
+		return matchesFood && matchesPrice && matchesTime;
 	});
 
 	return (

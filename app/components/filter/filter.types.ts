@@ -4,7 +4,7 @@ export type Filter = {
 	title: string;
 	category: FilterNames;
 	filterOptions: {
-		id: string;
+		value: string;
 		name: string;
 		isSelected?: boolean;
 	}[];

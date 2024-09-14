@@ -14,18 +14,18 @@ const Filter: React.FC<Props> = ({ category, filterOptions, title }) => {
 		<div>
 			<h3 className={styles.title}>{title}</h3>
 			<ul className={styles.list}>
-				{filterOptions.map(({ id, isSelected, name }) => {
+				{filterOptions.map(({ value, isSelected, name }) => {
 					const mutableQuery = new URLSearchParams(immutableQuery);
 					isSelected
-						? mutableQuery.delete(category, id)
-						: mutableQuery.append(category, id);
+						? mutableQuery.delete(category, value)
+						: mutableQuery.append(category, value);
 					return (
 						<a
 							href={`?${mutableQuery.toString()}`}
 							className={`${styles.filter} ${
 								isSelected ? styles.selectedFilter : undefined
 							}`}
-							key={id}
+							key={value}
 						>
 							{name}
 						</a>
