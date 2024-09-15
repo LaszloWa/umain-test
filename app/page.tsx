@@ -1,5 +1,5 @@
 import React from "react";
-import { isDefined, unique } from "list-fns";
+import { isDefined, unique, uniqueByProperty } from "list-fns";
 
 import { Filters as FiltersType } from "./components/filters/filters.types";
 import { RestaurantCard as RestaurantCardType } from "./components/restaurant-card/restaurant-card.types";
@@ -16,6 +16,7 @@ import getOpenState from "./services/open";
 import getRestaurants from "./services/restaurants";
 
 import styles from "./page.module.scss";
+import getPriceRange from "./services/price-range";
 
 const Root: React.FC<Props> = async ({ searchParams }) => {
 	const query = searchParams;
@@ -40,14 +41,34 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 		}),
 	).then((result) => result.filter(isDefined));
 
-	const restaurants: RestaurantCardType[] = openingStateResponse.map(
+	const priceRangeResponse = await Promise.all(
+		openingStateResponse.map(async (restaurant) => {
+			try {
+				const response = await getPriceRange(restaurant.price_range_id);
+
+				return {
+					...restaurant,
+					priceRange: {
+						name: response.range,
+						value: response.id,
+					},
+				};
+			} catch (error) {
+				console.error(
+					`Error fetching the open state of restaurant ${restaurant.id}`,
+				);
+			}
+		}),
+	).then((result) => result.filter(isDefined));
+
+	const restaurants: RestaurantCardType[] = priceRangeResponse.map(
 		(restaurant) => ({
 			title: restaurant.name,
 			deliveryTime: String(restaurant.delivery_time_minutes),
 			imageUrl: restaurant.image_url,
 			isOpen: restaurant.openState,
 			filterIds: restaurant.filter_ids,
-			priceRangeId: restaurant.price_range_id,
+			priceRangeId: restaurant.priceRange,
 		}),
 	);
 
@@ -106,13 +127,15 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 		{
 			title: "PRICE RANGE",
 			category: FilterNames["Price"],
-			filterOptions: priceRanges.map((priceRange, index) => ({
-				name: String(index),
-				value: priceRange,
-				isSelected: query[FilterNames["Price"]]?.includes(priceRange)
-					? true
-					: false,
-			})),
+			filterOptions: priceRanges
+				.map((priceRange) => ({
+					name: priceRange.name,
+					value: priceRange.value,
+					isSelected: query[FilterNames["Price"]]?.includes(priceRange.value)
+						? true
+						: false,
+				}))
+				.filter(uniqueByProperty("value")),
 		},
 	];
 
@@ -131,7 +154,7 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 			: true;
 
 		const matchesPrice = priceFilters.length
-			? priceFilters.includes(restaurant.priceRangeId)
+			? priceFilters.includes(restaurant.priceRangeId.value)
 			: true;
 
 		const matchesTime = timeFilters.length

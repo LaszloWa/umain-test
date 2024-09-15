@@ -3,6 +3,9 @@ export type RestaurantCard = {
 	filterIds: string[];
 	imageUrl: string;
 	isOpen: boolean;
-	priceRangeId: string;
+	priceRangeId: {
+		name: string;
+		value: string;
+	};
 	title: string;
 };

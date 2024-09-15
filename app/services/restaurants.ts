@@ -28,9 +28,9 @@ const getRestaurants = async (): Promise<
 
 	if (!apiRoute) throw new Error("API route not found");
 
-	const response = await fetch(`${apiRoute}/restaurants`).catch((err) =>
-		console.error(`Oh no, this error occurred: ${err}`),
-	);
+	const response = await fetch(`${apiRoute}/restaurants`, {
+		method: "GET",
+	}).catch((err) => console.error(`Oh no, this error occurred: ${err}`));
 
 	if (!response) throw new Error(`Something went wrong fetching data`);
 
