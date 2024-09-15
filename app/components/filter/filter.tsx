@@ -10,8 +10,8 @@ const Filter: React.FC<Props> = ({ category, filterOptions, title }) => {
 	const immutableQuery = useSearchParams();
 
 	return (
-		<div>
-			<h3 className={styles.title}>{title}</h3>
+		<div className={styles.filter}>
+			<h3>{title}</h3>
 			<ul className={styles.list}>
 				{filterOptions.map(({ value, isSelected, name }) => {
 					const mutableQuery = new URLSearchParams(immutableQuery);
@@ -24,7 +24,7 @@ const Filter: React.FC<Props> = ({ category, filterOptions, title }) => {
 							onClick={() =>
 								(window.location.href = `?${mutableQuery.toString()}`)
 							}
-							className={`${styles.filter} ${
+							className={`${styles.button} ${
 								isSelected ? styles.selectedFilter : undefined
 							}`}
 							key={value}

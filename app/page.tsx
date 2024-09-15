@@ -149,10 +149,10 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 
 	return (
 		<div className={styles.root}>
-			<div className={styles.left}>
+			<div className={styles.filters}>
 				<Filters filterCategories={filters} />
 			</div>
-			<div className={styles.right}>
+			<div>
 				<FilterCards filters={filterCards} />
 				<h1>Restaurants</h1>
 				<ul className={styles.restaurantCards}>

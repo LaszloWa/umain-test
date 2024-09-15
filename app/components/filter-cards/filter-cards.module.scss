@@ -1,12 +1,19 @@
 @import "../../styles/box-shadow.scss";
 @import "../../styles/colors.scss";
+@import "../../styles/breakpoints.scss";
 
 .filterCards {
 	display: flex;
-	flex-wrap: wrap;
 	gap: 10px;
+	height: min-content;
 	list-style: none;
-	padding: 0;
+	padding: 4px;
+	overflow-x: scroll;
+
+	@media (min-width: $medium) {
+		flex-wrap: wrap;
+		overflow-x: none;
+	}
 }
 
 .filterCard {
@@ -21,7 +28,7 @@
 	justify-content: space-between;
 	padding: 16px 12px;
 	position: relative;
-	width: 160px;
+	min-width: 160px;
 }
 
 .isSelected {

@@ -1,6 +1,11 @@
 @import "../../styles/colors.scss";
+@import "../../styles/breakpoints.scss";
 
 .filter {
+	max-width: 275px;
+}
+
+.button {
 	align-items: center;
 	background: none;
 	border-radius: 8px;
@@ -9,11 +14,10 @@
 	cursor: pointer;
 	display: flex;
 	height: 31px;
+	max-width: 239px;
+	min-width: fit-content;
 	outline: inherit;
 	padding: 0 12px;
-}
-.title {
-	color: #747373;
 }
 
 .selectedFilter {
@@ -23,7 +27,11 @@
 
 .list {
 	display: flex;
-	flex-wrap: wrap;
 	gap: 10px;
 	padding: 0;
+	overflow-x: scroll;
+
+	@media (min-width: $medium) {
+		flex-wrap: wrap;
+	}
 }

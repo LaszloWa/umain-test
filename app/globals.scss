@@ -1,3 +1,5 @@
+@import "./styles/breakpoints.scss";
+
 @font-face {
 	font-family: "SFPro";
 	src: url("./fonts/SF-Pro.ttf") format("truetype");
@@ -5,14 +7,20 @@
 
 html,
 body {
-	max-width: 100vw;
+	min-width: 327px; // NOTE: But of a magic number. This takes the screen paddng the design specifies (24px on small viewports) and subtracts the 48px total padding on small viewports from the max width, so that elements don't get pushed off screen due to the padding.
+	max-width: 1440px;
 	height: 100vh;
 	overflow-x: hidden;
+	margin: auto;
 }
 
 html {
-	padding: 40px;
+	padding: 24px;
 	font-family: "SFPro";
+
+	@media (min-width: $medium) {
+		padding: 40px;
+	}
 }
 
 body {
@@ -23,15 +31,31 @@ body {
 }
 
 header {
-	margin: 56px 0 48px;
+	margin: 56px 0 24px;
+
+	@media (min-width: $medium) {
+		margin: 56px 0 48px;
+	}
+
+	svg {
+		height: 20px;
+
+		@media (min-width: $medium) {
+			height: 40px;
+		}
+	}
 }
 
 h1 {
 	font-family: "SFPro";
-	font-size: 40px;
+	font-size: 20px;
 	line-height: 125%;
 	letter-spacing: -0.03125rem;
 	font-weight: normal;
+
+	@media (min-width: $medium) {
+		font-size: 40px;
+	}
 }
 
 h2 {
@@ -40,6 +64,15 @@ h2 {
 	line-height: 125%;
 	letter-spacing: -0.03125rem;
 	font-weight: normal;
+}
+
+h3 {
+	font-family: "SFPro";
+	font-size: 12px;
+	line-height: 125%;
+	letter-spacing: -0.03125rem;
+	font-weight: normal;
+	color: #747373;
 }
 
 a {

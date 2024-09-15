@@ -1,10 +1,19 @@
+@import "./styles/breakpoints.scss";
+
 .root {
-	display: grid;
-	grid-template-columns: 250px 1fr;
+	display: flex;
+	flex-direction: column;
+
+	@media (min-width: $medium) {
+		display: grid;
+		grid-template-columns: 250px 1fr;
+	}
 }
 
-.left {
-	margin-right: 30px;
+.filters {
+	@media (min-width: $medium) {
+		margin-right: 30px;
+	}
 }
 
 .restaurantCards {

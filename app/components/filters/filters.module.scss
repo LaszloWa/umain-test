@@ -1,12 +1,38 @@
+@import "../../styles/box-shadow.scss";
+@import "../../styles/breakpoints.scss";
+
 .filters {
 	border-radius: 8px;
 	border-width: 0.6px;
-	height: 31px;
-	max-width: 239px;
 	padding: auto 8px;
 }
 
 .list {
 	list-style: none;
 	padding: 0;
+}
+
+.collapse {
+	@media (min-width: $medium) {
+		height: auto !important;
+		visibility: visible !important;
+	}
+}
+
+.toggle {
+	background: none;
+	border-radius: 8px;
+	border: $stroke 0.6px solid;
+	box-shadow: $small-box-shadow;
+	color: inherit;
+	cursor: pointer;
+	display: block;
+	margin: auto;
+	padding: 8px 12px;
+	text-align: center;
+	width: fit-content;
+
+	@media (min-width: $medium) {
+		display: none;
+	}
 }
