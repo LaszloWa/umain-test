@@ -14,6 +14,7 @@ const FilterCards: React.FC<Props> = ({ filters }) => {
 	return (
 		<ul className={styles.filterCards}>
 			{filters.map(({ imageUrl, name, value, isSelected, category }) => {
+				// eslint-disable-next-line
 				const FilterImage = require(`../../assets${imageUrl}`);
 
 				const mutableQuery = new URLSearchParams(immutableQuery);

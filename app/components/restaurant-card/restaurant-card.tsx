@@ -17,6 +17,7 @@ const RestaurantCard: React.FC<Props> = ({
 	isOpen,
 	title,
 }) => {
+	// eslint-disable-next-line
 	const Logo = require(`../../assets${imageUrl}`);
 
 	return (
