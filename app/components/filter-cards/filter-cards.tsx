@@ -14,9 +14,6 @@ const FilterCards: React.FC<Props> = ({ filters }) => {
 	return (
 		<ul className={styles.filterCards}>
 			{filters.map(({ imageUrl, name, value, isSelected, category }) => {
-				// eslint-disable-next-line
-				const FilterImage = require(`../../assets${imageUrl}`);
-
 				const mutableQuery = new URLSearchParams(immutableQuery);
 				isSelected
 					? mutableQuery.delete(category, value)
@@ -33,7 +30,7 @@ const FilterCards: React.FC<Props> = ({ filters }) => {
 						<div>{name}</div>
 						<div className={styles.image}>
 							<Image
-								src={FilterImage}
+								src={imageUrl}
 								alt={`An image of ${name}`}
 								width={80}
 								height={80}

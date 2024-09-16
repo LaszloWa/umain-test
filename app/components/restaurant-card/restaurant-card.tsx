@@ -17,9 +17,6 @@ const RestaurantCard: React.FC<Props> = ({
 	isOpen,
 	title,
 }) => {
-	// eslint-disable-next-line
-	const Logo = require(`../../assets${imageUrl}`);
-
 	return (
 		<a href="" aria-label="" className={styles.restaurantCard} key={title}>
 			<div className={styles.top}>
@@ -37,7 +34,12 @@ const RestaurantCard: React.FC<Props> = ({
 				</div>
 			</div>
 			<div className={styles.image}>
-				<Image src={Logo} alt={`${title}'s logo`} width={140} height={140} />
+				<Image
+					src={imageUrl}
+					alt={`${title}'s logo`}
+					width={140}
+					height={140}
+				/>
 			</div>
 		</a>
 	);

@@ -18,6 +18,8 @@ import getRestaurants from "./services/restaurants";
 import styles from "./page.module.scss";
 import getPriceRange from "./services/price-range";
 
+const photoApiRoute = process.env.PHOTO_API_ROUTE;
+
 const Root: React.FC<Props> = async ({ searchParams }) => {
 	const query = searchParams;
 
@@ -65,7 +67,7 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 		(restaurant) => ({
 			title: restaurant.name,
 			deliveryTime: String(restaurant.delivery_time_minutes),
-			imageUrl: restaurant.image_url,
+			imageUrl: `${photoApiRoute}/${restaurant.image_url}`,
 			isOpen: restaurant.openState,
 			filterIds: restaurant.filter_ids,
 			priceRangeId: restaurant.priceRange,
@@ -76,7 +78,7 @@ const Root: React.FC<Props> = async ({ searchParams }) => {
 		(filter) => ({
 			name: filter.name,
 			value: filter.id,
-			imageUrl: filter.image_url,
+			imageUrl: `${photoApiRoute}/${filter.image_url}`,
 			category: FilterNames["Food"],
 			isSelected: query[FilterNames["Food"]]?.includes(filter.id) ?? false,
 		}),
