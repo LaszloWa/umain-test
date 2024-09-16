@@ -4,7 +4,13 @@
 .filters {
 	border-radius: 8px;
 	border-width: 0.6px;
-	padding: auto 8px;
+	margin-bottom: 20px;
+
+	@media (min-width: $medium) {
+		border: $stroke 0.6px solid;
+		box-shadow: $small-box-shadow;
+		padding: 24px 24px;
+	}
 }
 
 .list {
