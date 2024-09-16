@@ -39,6 +39,8 @@ const RestaurantCard: React.FC<Props> = ({
 					alt={`${title}'s logo`}
 					width={140}
 					height={140}
+					placeholder="blur"
+					blurDataURL={imageUrl}
 				/>
 			</div>
 		</a>

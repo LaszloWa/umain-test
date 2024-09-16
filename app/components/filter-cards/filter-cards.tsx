@@ -34,6 +34,8 @@ const FilterCards: React.FC<Props> = ({ filters }) => {
 								alt={`An image of ${name}`}
 								width={80}
 								height={80}
+								placeholder="blur"
+								blurDataURL={imageUrl}
 							/>
 						</div>
 					</button>
